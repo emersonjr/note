@@ -197,9 +197,25 @@ while True:
             listtoinsert.append(username)
             listtoinsert.append(auth)
             con = lite.connect('datas.db')
-            with con:
-                cur = con.cursor()
-                cur.execute('INSERT INTO Users(Name,Password) VALUES(?,?)', listtoinsert)
+            try:
+                with con:
+                    cur = con.cursor()
+                    cur.execute('INSERT INTO Users(Name,Password) VALUES(?,?)', listtoinsert)
+            except lite.IntegrityError:
+                response = ''
+                response += 'HTTP/1.1 409 Conflict\r\n'
+                response += 'Content-Type: text/html; charset=utf-8\r\n'
+                response += '\r\n'
+                response += """
+                <html>
+                    <head>
+                        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+                    </head>
+                    <body>
+                        <h1>ERROR 409<h1>
+                    </body>
+                </html>
+                """
 
 
      
