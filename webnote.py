@@ -281,7 +281,7 @@ while True:
             </html>
             """
         elif method == 'POST':
-            new_dict = urlparse.parse_qs(data)
+            new_dict = parse_qs(data)
             print new_dict
             rins1 = new_dict['name'][0]
             rins2 = new_dict['content'][0]
@@ -339,7 +339,7 @@ while True:
 		else:
 			break
 	    if data != '1':
-		    new_dict = urlparse.parse_qs(data)
+		    new_dict = parse_qs(data)
 		    note_dict[new_dict['name'][0]] = new_dict['content'][0]
 		    with open('.notes', 'w') as note_file:
 				json.dump(note_dict, note_file)
